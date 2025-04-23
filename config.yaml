@@ -1,0 +1,17 @@
+dataset:
+  train:
+    transaction: "Data/Train/SAV_TXN_Data.csv"
+    accountInfo: "Data/Train/ACCTS_Data.csv"
+    idInfo: "Data/Train/ID_Data.csv"
+    watchList: "Data/Train/ECCUS_Data.csv"
+  test:
+    transaction: "Data/Test/SAV_TXN_Data.csv"
+    accountInfo: "Data/Test/ACCTS_Data.csv"
+    idInfo: "Data/Test/ID_Data.csv"
+    watchList: "output.csv"
+  numericalCols: ['TX_AMT','PB_BAL','DRCR']
+  categoricalCols: ['CHANNEL_CODE','TRN_CODE','DAY_OF_WEEK']
+  validateSplit: 0.1
+parameter:
+  batchSize: 32
+  learningRate: 0.001
