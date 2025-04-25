@@ -9,8 +9,26 @@ dataset:
     accountInfo: "Data/Test/ACCTS_Data.csv"
     idInfo: "Data/Test/ID_Data.csv"
     watchList: "output.csv"
-  numericalCols: ['TX_AMT','PB_BAL','DRCR']
-  categoricalCols: ['CHANNEL_CODE','TRN_CODE','DAY_OF_WEEK']
+  numericalCols: [
+      # ACCTS_Data
+      'ACCT_OPEN_DT_MAIN', 
+      'ACCT_OPEN_DT_OWN', 
+      # ID_Data
+      'AUM_AMT_MAIN', 'DATE_OF_BIRTH_MAIN', 
+      'AUM_AMT_OWN', 'DATE_OF_BIRTH_OWN', 
+      # SAV_TXN_Data
+      'TX_DATE', 'TX_TIME', 'TX_AMT', 'PB_BAL', 'mb_check', 'eb_check'
+    ]
+  categoricalCols: [
+      # ACCTS_Data
+      'CANCEL_NO_CONTACT_MAIN', 'IS_DIGITAL_MAIN',
+      'CANCEL_NO_CONTACT_OWN', 'IS_DIGITAL_OWN',
+      # ID_Data
+      'CNTY_CD_MAIN',
+      'CNTY_CD_OWN',
+      # SAV_TXN_Data
+      'DRCR', 'CHANNEL_CODE', 'TRN_CODE', 'BRANCH_NO', 'EMP_NO', 'SAME_NUMBER_IP', 'SAME_NUMBER_UUID', 'DAY_OF_WEEK' 
+    ]
   validateSplit: 0.1
 parameter:
   batchSize: 32

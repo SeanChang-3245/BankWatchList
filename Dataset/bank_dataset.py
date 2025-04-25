@@ -13,7 +13,9 @@ class BankTxnDataset(Dataset):
         df_id   = pd.read_csv(self.ds['idInfo'])
         df_wl   = pd.read_csv(self.ds['watchList'])
         
-        # df_acct = df_acct.drop(columns=['CUST_ID'])
+        # Drop rows where OWN_TRANS_ID is 'ID99999'
+        # TODO: padding for ID99999, use main accout?
+        # df_txn = df_txn[df_txn['OWN_TRANS_ID'] != 'ID99999']
 
         # 1) Pre‑rename *all* but the key so there’s no duplicate key column
         acct_main = df_acct.rename(
@@ -49,17 +51,21 @@ class BankTxnDataset(Dataset):
         # 3) derive binary label per transaction from watch‑list (by CUST_ID)
         watch_set = set(df_wl['ACCT_NBR'])
         df['LABEL'] = df['ACCT_NBR'].isin(watch_set).astype(int)
-        
+
         # 4) pick & order features (your real column names here)
         numeric_cols = cfg.dataset["numericalCols"]                          
         categorical_cols = cfg.dataset["categoricalCols"]                    
         feature_cols = numeric_cols + categorical_cols
         
+        # TODO: other embedding method
         # 5) fit/transform ColumnTransformer
         self.ct = ColumnTransformer([
             ("num", StandardScaler(),     numeric_cols),
-            ("cat", OneHotEncoder(handle_unknown='ignore'), categorical_cols),
-        ], remainder="drop")
+            ("cat", OneHotEncoder(handle_unknown='ignore'), categorical_cols),], 
+            remainder="drop")
+
+        print(df[feature_cols].head(5))
+        
         # only fit on train
         if split == "train":
             X_all = self.ct.fit_transform(df[feature_cols])
@@ -76,13 +82,12 @@ class BankTxnDataset(Dataset):
         # 6) group into sequences per ACCT_NBR
         sequences = []
         for acct, grp in df.groupby("ACCT_NBR"):
+            grp = grp.sort_values('TX_DATE')
             idxs = grp['row_idx'].to_numpy()
             feats = X_all[idxs].astype(np.float32)               # (seq_len, feat_dim)
             lbl   = int(y_all[idxs[0]])                          # same label for whole sequence
-            sequences.append((torch.from_numpy(feats), torch.tensor(lbl, dtype=torch.float32)))
+            sequences.append((torch.from_numpy(feats), acct, torch.tensor(lbl, dtype=torch.float32)))
         
-        print(type(sequences[0]))
-        print(sequences[0])
         self.data = sequences
 
     def __len__(self):
