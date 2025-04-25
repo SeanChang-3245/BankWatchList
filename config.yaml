@@ -33,3 +33,7 @@ dataset:
 parameter:
   batchSize: 32
   learningRate: 0.001
+  attention_head: 4
+  num_layers: 2
+  d_model: 128
+  epochs: 256

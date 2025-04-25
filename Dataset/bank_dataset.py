@@ -102,7 +102,7 @@ class BankTxnDataset(Dataset):
             idxs = grp['row_idx'].to_numpy()
             feats = X_all[idxs].astype(np.float32)               # (seq_len, feat_dim)
             lbl   = int(y_all[idxs[0]])                          # same label for whole sequence
-            sequences.append((torch.from_numpy(feats), acct, torch.tensor(lbl, dtype=torch.float32)))
+            sequences.append((torch.from_numpy(feats), torch.tensor(lbl, dtype=torch.float32)))
         
         self.data = sequences
 
