@@ -4,6 +4,8 @@ import torch
 from torch.utils.data import Dataset
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
 
 class BankTxnDataset(Dataset):
     def __init__(self, cfg, split="train"):
@@ -14,7 +16,6 @@ class BankTxnDataset(Dataset):
         df_wl   = pd.read_csv(self.ds['watchList'])
         
         # Drop rows where OWN_TRANS_ID is 'ID99999'
-        # TODO: padding for ID99999, use main accout?
         # df_txn = df_txn[df_txn['OWN_TRANS_ID'] != 'ID99999']
 
         # 1) Pre‑rename *all* but the key so there’s no duplicate key column
@@ -48,6 +49,10 @@ class BankTxnDataset(Dataset):
             'CUST_ID_OWN_y'
         ])
         
+        date_cols = ['TX_DATE', 'ACCT_OPEN_DT_MAIN', 'ACCT_OPEN_DT_OWN', 'DATE_OF_BIRTH_MAIN', 'DATE_OF_BIRTH_OWN']
+        min_date = df[date_cols].min().min()
+        max_date = df[date_cols].max().max()
+        
         # 3) derive binary label per transaction from watch‑list (by CUST_ID)
         watch_set = set(df_wl['ACCT_NBR'])
         df['LABEL'] = df['ACCT_NBR'].isin(watch_set).astype(int)
@@ -58,14 +63,25 @@ class BankTxnDataset(Dataset):
         feature_cols = numeric_cols + categorical_cols
         
         # TODO: other embedding method
+        # TODO: padding for ID99999
         # 5) fit/transform ColumnTransformer
-        self.ct = ColumnTransformer([
-            ("num", StandardScaler(),     numeric_cols),
-            ("cat", OneHotEncoder(handle_unknown='ignore'), categorical_cols),], 
-            remainder="drop")
+        # numeric pipeline: mean‐impute then standardize
+        num_pipeline = Pipeline([
+            ("impute", SimpleImputer(strategy="mean")),
+            ("scale",  StandardScaler())
+        ])
 
-        print(df[feature_cols].head(5))
-        
+        # categorical pipeline: constant‐impute to "PAD", then one‐hot
+        cat_pipeline = Pipeline([
+            ("impute", SimpleImputer(strategy="constant", fill_value=-1)), # since all the categorical value are number not string
+            ("onehot", OneHotEncoder(handle_unknown="ignore"))
+        ])
+
+        self.ct = ColumnTransformer([
+            ("num", num_pipeline, numeric_cols),
+            ("cat", cat_pipeline, categorical_cols),
+        ], remainder="drop")
+
         # only fit on train
         if split == "train":
             X_all = self.ct.fit_transform(df[feature_cols])
