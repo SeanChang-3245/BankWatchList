@@ -11,8 +11,7 @@ dataset:
     watchList: "output.csv"
   numericalCols: [
       # ACCTS_Data
-      'ACCT_OPEN_DT_MAIN', 
-      'ACCT_OPEN_DT_OWN', 
+      
       # ID_Data
       'AUM_AMT_MAIN', 'DATE_OF_BIRTH_MAIN', 
       'AUM_AMT_OWN', 'DATE_OF_BIRTH_OWN', 
@@ -21,8 +20,8 @@ dataset:
     ]
   categoricalCols: [
       # ACCTS_Data
-      'CANCEL_NO_CONTACT_MAIN', 'IS_DIGITAL_MAIN',
-      'CANCEL_NO_CONTACT_OWN', 'IS_DIGITAL_OWN',
+      'ACCT_OPEN_DT_MAIN', 'CANCEL_NO_CONTACT_MAIN', 'IS_DIGITAL_MAIN',
+      'ACCT_OPEN_DT_OWN', 'CANCEL_NO_CONTACT_OWN', 'IS_DIGITAL_OWN',
       # ID_Data
       'CNTY_CD_MAIN',
       'CNTY_CD_OWN',
