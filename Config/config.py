@@ -20,9 +20,14 @@ class ParameterConfig:
     learningRate: float
 
 @dataclass
+class ModelConfig:
+    textEmbeddingModel: str
+
+@dataclass
 class Config:
     dataset: DatasetConfig
     parameter: ParameterConfig
+    model: ModelConfig
 
 def load_config(path: str = "./config.yaml") -> Config:
     with open(path, 'r') as file:

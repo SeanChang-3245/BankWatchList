@@ -6,6 +6,24 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
+import yaml
+from sentence_transformers import SentenceTransformer
+from sklearn.base import BaseEstimator, TransformerMixin
+
+class CategoryEmbedder(BaseEstimator, TransformerMixin):
+    def __init__(self, emb_mapping, embed_dim):
+        self.emb_mapping = emb_mapping
+        self.embed_dim    = embed_dim
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        arr = np.array(X).reshape(-1)
+        out = np.zeros((len(arr), self.embed_dim), dtype=float)
+        for i, v in enumerate(arr):
+            out[i] = self.emb_mapping.get(int(v), np.zeros(self.embed_dim))
+        return out
 
 class BankTxnDataset(Dataset):
     def __init__(self, cfg, split="train"):
@@ -62,31 +80,56 @@ class BankTxnDataset(Dataset):
         categorical_cols = cfg.dataset["categoricalCols"]                    
         feature_cols = numeric_cols + categorical_cols
         
-        # TODO: other embedding method
-        # TODO: padding for ID99999
-        # 5) fit/transform ColumnTransformer
-        # numeric pipeline: mean‐impute then standardize
+        # 0) load YAML explanations
+        with open(cfg.dataset["categoryEmbedding"]) as f:
+            cat_map = yaml.safe_load(f)
+
+        # 1) init text‐embedder
+        txt_model = SentenceTransformer(cfg.model["textEmbeddingModel"])
+        emb_dim   = txt_model.get_sentence_embedding_dimension()
+
+        # 2) build per‐column {cat_value → vector}
+        cat_emb_dict = {}
+        for col in categorical_cols:
+            info = cat_map.get(col)
+            if info:
+                m = {}
+                for c, exp in zip(info["category"], info["explain"]):
+                    m[int(c)] = txt_model.encode(exp, show_progress_bar=False)
+                cat_emb_dict[col] = m
+
+        # 3) pipelines
         num_pipeline = Pipeline([
             ("impute", SimpleImputer(strategy="mean")),
-            ("scale",  StandardScaler())
+            ("scale",   StandardScaler())
         ])
 
-        # categorical pipeline: constant‐impute to "PAD", then one‐hot
-        cat_pipeline = Pipeline([
-            ("impute", SimpleImputer(strategy="constant", fill_value=-1)), # since all the categorical value are number not string
-            ("onehot", OneHotEncoder(handle_unknown="ignore"))
-        ])
+        cat_transformers = []
+        for col in categorical_cols:
+            if col in cat_emb_dict:
+                pipe = Pipeline([
+                    ("impute", SimpleImputer(strategy="constant", fill_value=-1)),
+                    ("embed",  CategoryEmbedder(cat_emb_dict[col], emb_dim))
+                ])
+                cat_transformers.append((f"emb_{col}", pipe, [col]))
+            else:
+                # fallback to one‑hot
+                pipe = Pipeline([
+                    ("impute", SimpleImputer(strategy="constant", fill_value=-1)),
+                    ("onehot", OneHotEncoder(handle_unknown="ignore"))
+                ])
+                cat_transformers.append((f"ohe_{col}", pipe, [col]))
 
-        self.ct = ColumnTransformer([
-            ("num", num_pipeline, numeric_cols),
-            ("cat", cat_pipeline, categorical_cols),
-        ], remainder="drop")
+        self.ct = ColumnTransformer(
+            [("num", num_pipeline, numeric_cols)] + cat_transformers,
+            remainder="drop"
+        )
 
-        # only fit on train
-        if split == "train":
-            X_all = self.ct.fit_transform(df[feature_cols])
+        # 4) fit/transform as before…
+        if split=="train":
+            X_all = self.ct.fit_transform(df[ numeric_cols + categorical_cols ])
         else:
-            X_all = self.ct.transform(df[feature_cols])
+            X_all = self.ct.transform(   df[ numeric_cols + categorical_cols ])
 
         # if it's sparse, make it dense
         if hasattr(X_all, "toarray"):
