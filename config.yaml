@@ -33,12 +33,12 @@ dataset:
   validateSplit: 0.1
   
 parameter:
-  batchSize: 32
+  batchSize: 128
   learningRate: 0.001
   attention_head: 4
   num_layers: 2
   d_model: 128
-  epochs: 256
+  epochs: 5
 
 model:
   textEmbeddingModel: "paraphrase-multilingual-MiniLM-L12-v2"
