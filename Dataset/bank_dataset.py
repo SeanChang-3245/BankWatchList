@@ -80,6 +80,10 @@ class BankTxnDataset(Dataset):
         categorical_cols = cfg.dataset["categoricalCols"]                    
         feature_cols = numeric_cols + categorical_cols
         
+        ######################### TESTING #################################
+        # df = df.head()
+        ######################### TESTING #################################
+        
         # 0) load YAML explanations
         with open(cfg.dataset["categoryEmbedding"]) as f:
             cat_map = yaml.safe_load(f)
