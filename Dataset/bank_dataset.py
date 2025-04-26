@@ -193,9 +193,6 @@ class BankTxnDataset(Dataset):
             remainder="drop"
         )
         
-        print(df.shape)
-        print(df.columns)
-        
         # Ensure consistent feature dimensions
         if split == "train" or (split == "val" and BankTxnDataset.fitted_transformer is None):
             X_all = self.ct.fit_transform(df[numeric_cols + categorical_cols])
@@ -222,7 +219,12 @@ class BankTxnDataset(Dataset):
             idxs = grp['row_idx'].to_numpy()
             feats = X_all[idxs].astype(np.float32)               # (seq_len, feat_dim)
             lbl   = int(y_all[idxs[0]])                          # same label for whole sequence
-            sequences.append((torch.from_numpy(feats), torch.tensor(lbl, dtype=torch.float32)))
+            # Store tuple of (features, label, account_number)
+            sequences.append((
+                torch.from_numpy(feats),
+                torch.tensor(lbl, dtype=torch.float32),
+                acct  # Store the account number
+            ))
         
         # Split sequences for validation if needed
         if split == "train" or split == "val":
@@ -239,15 +241,23 @@ class BankTxnDataset(Dataset):
         else:  # split == "test"
             # Use all sequences for test set
             self.data = sequences
-            
-        print(f"Created {split} dataset with {len(self.data)} sequences")
-    
+                
     def __len__(self):
         return len(self.data)
     
     def __getitem__(self, idx):
-        # returns: seq_tensor of shape (seq_len, feat_dim), label float tensor
-        return self.data[idx]
+        # For backward compatibility, still return just sequence and label
+        features, label, _ = self.data[idx]
+        return features, label
+    
+    def get_acct_number(self, idx):
+        """Get account number for a specific index"""
+        _, _, acct = self.data[idx]
+        return acct
+    
+    def get_all_acct_numbers(self):
+        """Get all account numbers in the dataset, preserving order"""
+        return [acct for _, _, acct in self.data]
     
     def get_label(self):
         if self.split == 'test':
@@ -272,11 +282,11 @@ class BankTxnDataset(Dataset):
 from torch.nn.utils.rnn import pad_sequence
 
 def pad_collate_fn(batch):
-    # batch: list of (seq, label)
+    # batch: list of (seq, label) from __getitem__
     seqs, labels = zip(*batch)
     # pad seqs to (batch, max_seq_len, feat_dim)
     padded = pad_sequence(seqs, batch_first=True, padding_value=0.0)
     lengths = torch.tensor([s.size(0) for s in seqs], dtype=torch.long)
-    labels  = torch.stack(labels)
+    labels = torch.stack(labels)
     return padded, lengths, labels
 

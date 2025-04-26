@@ -34,11 +34,11 @@ dataset:
   
 parameter:
   batchSize: 128
-  learningRate: 0.001
+  learningRate: 0.0001
   attention_head: 4
-  num_layers: 2
+  num_layers: 8
   d_model: 128
-  epochs: 5
+  epochs: 30
 
 model:
   textEmbeddingModel: "paraphrase-multilingual-MiniLM-L12-v2"
