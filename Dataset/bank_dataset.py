@@ -110,6 +110,8 @@ class BankTxnDataset(Dataset):
         numeric_cols = cfg.dataset["numericalCols"]
         categorical_cols = cfg.dataset["categoricalCols"]
         feature_cols = numeric_cols + categorical_cols
+        # Store number of numeric features for augmentation noise later
+        self.num_numeric = len(numeric_cols)
         date_cols = ['TX_DATE', 'ACCT_OPEN_DT_MAIN', 'ACCT_OPEN_DT_OWN', 'DATE_OF_BIRTH_MAIN', 'DATE_OF_BIRTH_OWN']
         
         # Testing
@@ -225,6 +227,25 @@ class BankTxnDataset(Dataset):
                 torch.tensor(lbl, dtype=torch.float32),
                 acct  # Store the account number
             ))
+        
+        # Data augmentation for training: duplicate sequences with label 1 three times, 
+        # adding noise up to ±10% on the numerical features that are at the beginning of each feature vector.
+        if split == "train":
+            augmented_sequences = []
+            for features, label, acct in sequences:
+                augmented_sequences.append((features, label, acct))
+                # Check if label is 1
+                if int(label.item()) == 1:
+                    for _ in range(3):
+                        new_features = features.clone()
+                        # Apply noise to the first self.num_numeric columns (numeric features)
+                        numeric_feats = new_features[:, :self.num_numeric]
+                        noise = (torch.rand(numeric_feats.shape) - 0.5) * 0.2  # noise factor in [-0.1, 0.1]
+                        noise = noise * torch.abs(numeric_feats)
+                        new_numeric = numeric_feats + noise
+                        new_features[:, :self.num_numeric] = new_numeric
+                        augmented_sequences.append((new_features, label, acct))
+            sequences = augmented_sequences
         
         # Split sequences for validation if needed
         if split == "train" or split == "val":
