@@ -63,7 +63,8 @@ class BankTxnDataset(Dataset):
         df_txn = pd.read_csv(self.ds['transaction'])
         df_acct = pd.read_csv(self.ds['accountInfo'])
         df_id = pd.read_csv(self.ds['idInfo'])
-        df_wl = pd.read_csv(self.ds['watchList'])
+        if split != "test":
+            df_wl = pd.read_csv(self.ds['watchList'])
         
         
         # Pre-rename all but the key so there’s no duplicate key column
@@ -97,9 +98,13 @@ class BankTxnDataset(Dataset):
             # Map string values to integers
             df['DAY_OF_WEEK'] = df['DAY_OF_WEEK'].map(day_to_int).fillna(0).astype(int)
                 
-        # Derive binary label per transaction from watch-list (by CUST_ID)
-        watch_set = set(df_wl['ACCT_NBR'])
-        df['LABEL'] = df['ACCT_NBR'].isin(watch_set).astype(int)
+        # Derive binary label for train/val; skip for test
+        if split != "test":
+            watch_set = set(df_wl['ACCT_NBR'])
+            df['LABEL'] = df['ACCT_NBR'].isin(watch_set).astype(int)
+        else:
+            # dummy label for test sequences
+            df['LABEL'] = 0
     
         # Pick & order features (your real column names here)
         numeric_cols = cfg.dataset["numericalCols"]
@@ -245,9 +250,12 @@ class BankTxnDataset(Dataset):
         return self.data[idx]
     
     def get_label(self):
-        df_wl   = pd.read_csv(self.ds['watchList'])
+        if self.split == 'test':
+            watch_set = set()
+        else:
+            df_wl   = pd.read_csv(self.ds['watchList'])
+            watch_set = set(df_wl['ACCT_NBR'])
         df_txn  = pd.read_csv(self.ds['transaction'])
-        watch_set = set(df_wl['ACCT_NBR'])
         acct_list = sorted(df_txn['ACCT_NBR'].unique())
         df_label = pd.DataFrame({
             'ACCT_NBR': acct_list,
