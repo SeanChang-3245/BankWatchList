@@ -1,0 +1,275 @@
+/* Common Styles for all section components */
+.section {
+  margin-bottom: 3rem;
+  margin-top: 15rem;
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+}
+
+.section-title {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+  font-size: 2rem;
+  padding-top: 0.5rem;
+}
+
+/* Overview Section Styles */
+.overview-intro {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.overview-text {
+  flex: 3;
+}
+
+.overview-image {
+  flex: 2;
+  text-align: center;
+}
+
+.overview-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.overview-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.overview-card {
+  flex: 1 1 300px;
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.overview-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.stat-item {
+  flex: 1 1 200px;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin: 0.5rem;
+}
+
+.stat-item h3 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin: 0 0 0.5rem 0;
+}
+
+/* Data Section Styles */
+.data-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.data-source-item {
+  flex: 1 1 300px;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.stat-list {
+  list-style: none;
+  padding: 0;
+}
+
+.stat-list li {
+  margin-bottom: 0.75rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--primary-color);
+}
+
+.quality-metrics {
+  margin-top: 1rem;
+}
+
+.quality-metric {
+  margin-bottom: 1rem;
+}
+
+.quality-bar {
+  height: 8px;
+  background-color: var(--primary-color);
+  border-radius: 4px;
+  margin-bottom: 0.25rem;
+}
+
+.feature-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.feature-category {
+  flex: 1 1 200px;
+}
+
+.feature-category h4 {
+  margin-top: 0;
+  color: var(--primary-color);
+}
+
+/* Methodology Section Styles */
+.approach-diagram {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.full-width-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li {
+  display: flex;
+  margin-bottom: 1.5rem;
+  align-items: flex-start;
+}
+
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: var(--success-color);
+  color: white;
+  border-radius: 50%;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.eval-strategy {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.eval-item {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.eval-item h4 {
+  margin-top: 0;
+  color: var(--primary-color);
+}
+
+.pipeline-steps {
+  margin-top: 2rem;
+}
+
+.pipeline-step {
+  display: flex;
+  margin-bottom: 1.5rem;
+  align-items: flex-start;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  margin-right: 1.5rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .section {
+    padding: 1.5rem;
+  }
+  
+  .overview-intro {
+    flex-direction: column;
+  }
+  
+  .overview-image {
+    order: -1;
+    margin-bottom: 1.5rem;
+  }
+  
+  .pipeline-step {
+    flex-direction: column;
+  }
+  
+  .step-number {
+    margin-bottom: 0.75rem;
+  }
+  
+  .feature-list li {
+    flex-direction: column;
+  }
+  
+  .feature-icon {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.metric-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #4CAF50;
+  border-radius: 4px;
+}
+
+.metric-note {
+  font-size: 0.8rem;
+  color: #666;
+}

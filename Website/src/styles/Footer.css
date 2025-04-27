@@ -1,0 +1,126 @@
+.footer {
+  background-color: #343a40;
+  color: #f8f9fa;
+  padding: 3rem 0 1rem;
+  width: 100%;
+}
+
+.footer-container {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.footer-section {
+  flex: 1 1 250px;
+}
+
+.footer-section h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.footer-section h4 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #adb5bd;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+  color: #f8f9fa;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-section a:hover {
+  color: var(--accent-color);
+}
+
+.footer-bottom {
+  border-top: 1px solid #495057;
+  padding-top: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #adb5bd;
+  width: 100%;
+}
+
+.footer-bottom p {
+  margin: 0.5rem 0;
+}
+
+.highlight {
+  color: var(--secondary-color);
+}
+
+/* Large screens */
+@media (min-width: 1921px) {
+  .footer-container {
+    max-width: 1800px;
+  }
+}
+
+/* Medium screens */
+@media (max-width: 1200px) {
+  .footer-container {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Tablets and smaller desktops */
+@media (max-width: 992px) {
+  .footer-section {
+    flex: 1 1 200px;
+  }
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem 0 1rem;
+  }
+  
+  .footer-container {
+    padding: 0 1rem;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .footer-section {
+    flex: 1 1 100%;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+  .footer {
+    padding: 1.5rem 0 1rem;
+  }
+  
+  .footer-section h3 {
+    font-size: 1.3rem;
+  }
+}
