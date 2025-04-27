@@ -109,7 +109,7 @@ const Methodology = () => {
             <div className="step-number">2</div>
             <div className="step-content">
               <h4>Handling Class Imbalance</h4>
-              <p>Using SMOTE for synthetic minority oversampling and adjusted class weights</p>
+              <p>Using minority oversampling and adjusted class weights</p>
             </div>
           </div>
           
