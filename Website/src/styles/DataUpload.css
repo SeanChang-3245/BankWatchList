@@ -1,0 +1,289 @@
+/* DataUpload.css */
+.upload-card {
+  margin-bottom: 2rem;
+}
+
+.file-upload-area {
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin: 1.5rem 0;
+}
+
+.file-upload-area:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(0, 86, 179, 0.03);
+}
+
+.file-input {
+  display: none;
+}
+
+.file-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.upload-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.upload-text {
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.upload-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.upload-btn {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  min-width: 200px;
+}
+
+.error-message {
+  color: var(--danger-color);
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.success-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.results-section {
+  margin-top: 2rem;
+}
+
+.results-summary {
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.summary-item {
+  text-align: center;
+  flex: 1;
+  min-width: 120px;
+}
+
+.summary-value {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.summary-label {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.results-table-container {
+  overflow-x: auto;
+  margin-top: 1.5rem;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.results-table th {
+  background-color: #f1f5f9;
+  text-align: left;
+  padding: 1rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.results-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.results-table tr.high-risk {
+  background-color: rgba(220, 53, 69, 0.05);
+}
+
+.risk-meter {
+  height: 8px;
+  width: 100px;
+  background-color: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.risk-level {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.risk-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-high-risk {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: var(--danger-color);
+}
+
+.status-normal {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: var(--success-color);
+}
+
+.factor-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.factor-pill {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  background-color: rgba(0, 86, 179, 0.1);
+  color: var(--primary-color);
+}
+
+.info-card {
+  margin-top: 2rem;
+}
+
+.action-recommendations {
+  margin-top: 1.5rem;
+}
+
+.action-recommendations h4 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.action-recommendations ul {
+  margin-left: 1.5rem;
+}
+
+.note-card {
+  background-color: #f8f9fa;
+  border-left: 4px solid var(--primary-color);
+}
+
+.note-card h4 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .file-upload-area {
+    padding: 1.5rem;
+  }
+  
+  .upload-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .upload-text {
+    font-size: 0.9rem;
+  }
+  
+  .results-summary {
+    gap: 1rem;
+  }
+  
+  .summary-value {
+    font-size: 2rem;
+  }
+  
+  .results-table th,
+  .results-table td {
+    padding: 0.75rem;
+  }
+  
+  .risk-meter {
+    width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .file-upload-area {
+    padding: 1rem;
+  }
+  
+  .upload-icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 0.75rem;
+  }
+  
+  .upload-text {
+    font-size: 0.8rem;
+  }
+  
+  .upload-btn {
+    min-width: 100%;
+  }
+  
+  .summary-item {
+    min-width: 100px;
+  }
+  
+  .summary-value {
+    font-size: 1.5rem;
+  }
+  
+  .summary-label {
+    font-size: 0.8rem;
+  }
+  
+  .success-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .results-table-container {
+    margin-top: 1rem;
+  }
+}

@@ -44,7 +44,7 @@ const ProjectOverview = () => {
             Our solution provides three key benefits:
             <ul>
               <li>Reduced financial losses through early fraud detection</li>
-              <li>Platform for uploading bank accoutn dat</li>
+              <li>Secure platform for analyzing bank account data</li>
               <li>Strengthened regulatory compliance and risk management</li>
             </ul>
           </p>
