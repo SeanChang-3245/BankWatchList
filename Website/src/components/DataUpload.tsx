@@ -326,7 +326,7 @@ const DataUpload = () => {
         </div>
       )}
       
-      <div className="card note-card">
+      <div className="overview-card">
         <h4><span className="highlight">Note:</span> Data Security</h4>
         <p>
           All uploaded data is processed securely on our Amazon EC2 servers with end-to-end encryption. 
