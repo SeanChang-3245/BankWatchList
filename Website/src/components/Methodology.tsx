@@ -21,14 +21,14 @@ const Methodology = () => {
       <div className="flex-container">
         <div className="flex-item card">
           <h3>Model Selection</h3>
-          <p>After evaluating several machine learning algorithms, we selected <strong>XGBoost</strong> as our primary model due to:</p>
+          <p>After evaluating several machine learning algorithms, we selected <strong>Transformer</strong> as our primary model due to:</p>
           
           <ul className="feature-list">
             <li>
               <span className="feature-icon">✓</span>
               <div>
-                <strong>Performance with Imbalanced Data</strong>
-                <p>Handles the inherent class imbalance in fraud detection (1-2% fraud rate)</p>
+                <strong>Ability to process sequence data</strong>
+                <p>Handles the variable length of transaction data</p>
               </div>
             </li>
             
@@ -101,36 +101,20 @@ const Methodology = () => {
             <div className="step-number">1</div>
             <div className="step-content">
               <h4>Data Preprocessing</h4>
-              <p>Feature normalization, encoding categorical variables, and handling missing values</p>
+              <p>Feature normalization, encoding categorical variables, handling missing values and grouping by account number</p>
             </div>
           </div>
           
           <div className="pipeline-step">
             <div className="step-number">2</div>
             <div className="step-content">
-              <h4>Feature Selection</h4>
-              <p>Identifying the most predictive features using SHAP values and correlation analysis</p>
+              <h4>Handling Class Imbalance</h4>
+              <p>Using minority oversampling and adjusted class weights</p>
             </div>
           </div>
           
           <div className="pipeline-step">
             <div className="step-number">3</div>
-            <div className="step-content">
-              <h4>Handling Class Imbalance</h4>
-              <p>Using SMOTE for synthetic minority oversampling and adjusted class weights</p>
-            </div>
-          </div>
-          
-          <div className="pipeline-step">
-            <div className="step-number">4</div>
-            <div className="step-content">
-              <h4>Hyperparameter Tuning</h4>
-              <p>Bayesian optimization to find optimal model parameters</p>
-            </div>
-          </div>
-          
-          <div className="pipeline-step">
-            <div className="step-number">5</div>
             <div className="step-content">
               <h4>Model Evaluation</h4>
               <p>Comprehensive performance assessment on holdout test data</p>
@@ -138,7 +122,7 @@ const Methodology = () => {
           </div>
           
           <div className="pipeline-step">
-            <div className="step-number">6</div>
+            <div className="step-number">4</div>
             <div className="step-content">
               <h4>Deployment</h4>
               <p>Packaging the model for real-time scoring in the production environment</p>
