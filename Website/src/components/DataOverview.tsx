@@ -40,67 +40,44 @@ const DataOverview = () => {
         </div>
 
         <div className="flex-item card">
-          <h3>Data Quality</h3>
-          <div className="quality-metrics">
-            <div className="quality-metric">
-              <div className="quality-bar" style={{ width: '92%' }}></div>
-              <p data-value="92%">Completeness</p>
+          <h3>Feature Engineering</h3>
+          <p>Detecting fraudulent activity <strong>BEFORE</strong> financial losses occur requires transforming transaction data into predictive features.</p>
+          <div className="feature-categories">
+            <div className="feature-category">
+              <h4>Temporal Patterns</h4>
+              <ul>
+                <li>Sudden changes in transaction frequency</li>
+                <li>Unusual hour-of-day activity</li>
+                <li>Account dormancy followed by high activity</li>
+              </ul>
             </div>
-            <div className="quality-metric">
-              <div className="quality-bar" style={{ width: '89%' }}></div>
-              <p data-value="89%">Consistency</p>
+      
+            <div className="feature-category">
+              <h4>Amount Patterns</h4>
+              <ul>
+                <li>Sequential small transfers (structuring)</li>
+                <li>Deviation from historical amount ranges</li>
+                <li>Round-sum transactions</li>
+              </ul>
             </div>
-            <div className="quality-metric">
-              <div className="quality-bar" style={{ width: '94%' }}></div>
-              <p data-value="94%">Accuracy</p>
+      
+            <div className="feature-category">
+              <h4>Network Features</h4>
+              <ul>
+                <li>Transactions to high-risk regions</li>
+                <li>New beneficiary account patterns</li>
+                <li>Shared recipient accounts across multiple customers</li>
+              </ul>
             </div>
-            <div className="quality-metric">
-              <div className="quality-bar" style={{ width: '97%' }}></div>
-              <p data-value="97%">Timeliness</p>
+      
+            <div className="feature-category">
+              <h4>Account Behavior</h4>
+              <ul>
+                <li>Account emptying velocity</li>
+                <li>Login location vs. transaction location</li>
+                <li>Multi-channel transaction patterns</li>
+              </ul>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="card">
-        <h3>Feature Engineering</h3>
-        <p>Detecting fraudulent activity <strong>BEFORE</strong> financial losses occur requires transforming transaction data into predictive features.</p>
-
-        <div className="feature-categories">
-          <div className="feature-category">
-            <h4>Temporal Patterns</h4>
-            <ul>
-              <li>Sudden changes in transaction frequency</li>
-              <li>Unusual hour-of-day activity</li>
-              <li>Account dormancy followed by high activity</li>
-            </ul>
-          </div>
-
-          <div className="feature-category">
-            <h4>Amount Patterns</h4>
-            <ul>
-              <li>Sequential small transfers (structuring)</li>
-              <li>Deviation from historical amount ranges</li>
-              <li>Round-sum transactions</li>
-            </ul>
-          </div>
-
-          <div className="feature-category">
-            <h4>Network Features</h4>
-            <ul>
-              <li>Transactions to high-risk regions</li>
-              <li>New beneficiary account patterns</li>
-              <li>Shared recipient accounts across multiple customers</li>
-            </ul>
-          </div>
-
-          <div className="feature-category">
-            <h4>Account Behavior</h4>
-            <ul>
-              <li>Account emptying velocity</li>
-              <li>Login location vs. transaction location</li>
-              <li>Multi-channel transaction patterns</li>
-            </ul>
           </div>
         </div>
       </div>
