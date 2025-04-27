@@ -29,11 +29,18 @@ dataset:
       # SAV_TXN_Data
       'DRCR', 'CHANNEL_CODE', 'TRN_CODE', 'BRANCH_NO', 'EMP_NO', 'SAME_NUMBER_IP', 'SAME_NUMBER_UUID', 'DAY_OF_WEEK' 
     ]
+  categoryEmbedding: "./Data/CategoryEmbedding.yaml"
   validateSplit: 0.1
+  
 parameter:
-  batchSize: 32
-  learningRate: 0.001
-  attention_head: 4
-  num_layers: 2
+  batchSize: 128
+  learningRate: 0.0001
+  attention_head: 2
+  num_layers: 4
   d_model: 128
-  epochs: 256
+  epochs: 100
+  threshold: 0.5
+  dropout: 0.1
+
+model:
+  textEmbeddingModel: "paraphrase-multilingual-MiniLM-L12-v2"
