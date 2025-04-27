@@ -1,7 +1,7 @@
 /* Common Styles for all section components */
 .section {
+  width: auto;
   margin-bottom: 3rem;
-  margin-top: 15rem;
   background: white;
   border-radius: 12px;
   padding: 2.5rem;
@@ -15,7 +15,7 @@
   padding-bottom: 0.5rem;
   font-size: 2rem;
   padding-top: 0.5rem;
-  margin-top: 5rem;
+  /* margin-top: 5rem; */
 }
 
 /* Overview Section Styles */
@@ -248,7 +248,7 @@
 .feature-list {
   list-style: none;
   padding: 0;
-  margin
+  /* margin */
 }
 
 .feature-list li {

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -7,45 +8,57 @@ import DataOverview from './components/DataOverview';
 import Methodology from './components/Methodology';
 import DataUpload from './components/DataUpload';
 
-function App() {
+// This component will be inside the Router context
+function AppContent() {
   const [activeSection, setActiveSection] = useState('overview');
+  const navigate = useNavigate();
 
-  const renderSection = () => {
+  useEffect(() => {
     switch (activeSection) {
       case 'overview':
-        return <ProjectOverview />;
+        navigate('/');
+        break;
       case 'data':
-        return <DataOverview />;
+        navigate('/data');
+        break;
       case 'methodology':
-        return <Methodology />;
+        navigate('/methodology');
+        break;
       case 'upload':
-        return <DataUpload />;
-      // Add these additional cases once the components are created
-      /*
-      case 'results':
-        return <Results />;
-      case 'insights':
-        return <ModelInsights />;
-      case 'implementation':
-        return <Implementation />;
-      case 'future':
-        return <FutureImprovements />;
-      */
+        navigate('/upload');
+        break;
       default:
-        return <ProjectOverview />;
+        navigate('/');
     }
-  };
+  }, [activeSection, navigate]);
 
   return (
     <div className="app-container">
       <Header activeSection={activeSection} setActiveSection={setActiveSection} />
-      <div className="main-content-wrapper">
-        <main className="main-content">
-          {renderSection()}
-        </main>
+      <div className="else-container">
+        <div className="main-content-wrapper">
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<ProjectOverview />} />
+              <Route path="/data" element={<DataOverview />} />
+              <Route path="/methodology" element={<Methodology />} />
+              <Route path="/upload" element={<DataUpload />} />
+            </Routes>
+          </main>
+        </div>
+        <Footer />
       </div>
-      <Footer />
+      
     </div>
+  );
+}
+
+// Main App just provides the Router context
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
 
