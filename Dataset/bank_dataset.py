@@ -9,8 +9,6 @@ from sklearn.pipeline import Pipeline
 import yaml
 from sentence_transformers import SentenceTransformer
 from sklearn.base import BaseEstimator, TransformerMixin
-from imblearn.over_sampling import SMOTE
-
 
 # Update CategoryEmbedder to explicitly handle NaN values 
 
@@ -252,51 +250,29 @@ class BankTxnDataset(Dataset):
             np.random.seed(random_seed)
             indices = np.random.permutation(len(sequences))
             split_idx = int(len(sequences) * (1 - val_ratio))
-
+            
             if split == "train":
+                # Data augmentation for training: duplicate sequences with label 1 ten times, 
+                # adding noise up to ±10% on the numerical features that are at the beginning of each feature vector.
+                sequences = [sequences[i] for i in indices[:split_idx]]
+                augmented_sequences = []
+                for features, label, acct in sequences:
+                    augmented_sequences.append((features, label, acct))
+                    # Check if label is 1
+                    if int(label.item()) == 1:
+                        for _ in range(10):
+                            new_features = features.clone()
+                            # Apply noise to the first self.num_numeric columns (numeric features)
+                            numeric_feats = new_features[:, :self.num_numeric]
+                            noise = (torch.rand(numeric_feats.shape) - 0.5) * 0.2  # noise factor in [-0.1, 0.1]
+                            noise = noise * torch.abs(numeric_feats)
+                            new_numeric = numeric_feats + noise
+                            new_features[:, :self.num_numeric] = new_numeric
+                            augmented_sequences.append((new_features, label, acct))
+                sequences = augmented_sequences
+                
                 # Use only training portion
-                train_sequences = [sequences[i] for i in indices[:split_idx]]
-                
-                # Create fixed-length representations from sequences (by averaging over time dimension)
-                reps = []
-                labels = []
-                accts = []
-                for features, label, acct in train_sequences:
-                    rep = features.mean(dim=0).cpu().numpy()  # fixed-length representation (feat_dim,)
-                    reps.append(rep)
-                    labels.append(int(label.item()))
-                    accts.append(acct)
-                reps = np.stack(reps)
-                labels = np.array(labels)
-                
-                # Apply SMOTE 
-                smote = SMOTE(random_state=random_seed)
-                reps_res, labels_res = smote.fit_resample(reps, labels)
-                
-                # Build new sequence list.
-                # For synthetic samples, we create a sequence with a single timestep using the synthetic representation.
-                # For original samples, we look up the original full sequence.
-                # Here we use a simple approach by rebuilding the dataset from the resampled indices.
-                # Note: SMOTE does not directly provide which samples are synthetic. For illustration, we assume original samples remain intact.
-                new_sequences = []
-                # Create a lookup from (rep, label, acct) using index order:
-                original_lookup = {(r.tobytes(), l): acct for r, l, acct in zip(reps, labels, accts)}
-                for rep, label in zip(reps_res, labels_res):
-                    key = (rep.tobytes(), label)
-                    if key in original_lookup:
-                        # Use the original full sequence if available (this might add duplicates)
-                        # Find the first matching sequence from train_sequences
-                        for features, lbl, acct in train_sequences:
-                            if int(lbl.item()) == label and np.allclose(features.mean(dim=0).cpu().numpy(), rep, atol=1e-5):
-                                new_sequences.append((features, lbl, acct))
-                                break
-                    else:
-                        # Synthetic sample: create a single-timestep sequence
-                        new_features = torch.tensor(rep, dtype=torch.float32).unsqueeze(0)
-                        new_label = torch.tensor(label, dtype=torch.float32)
-                        new_sequences.append((new_features, new_label, None))
-                sequences = new_sequences
-                self.data = sequences
+                self.data = augmented_sequences
             else:  # split == "val"
                 # Use only validation portion
                 self.data = [sequences[i] for i in indices[split_idx:]]
