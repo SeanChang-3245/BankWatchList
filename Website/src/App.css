@@ -14,7 +14,18 @@
   box-sizing: border-box;
 }
 
-html, body {
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  /* Add scroll padding to prevent header overlap */
+  scroll-padding-top: 80px;
+  scroll-behavior: smooth;
+}
+
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -51,6 +62,7 @@ body {
   display: flex;
   justify-content: center;
   padding-top: 2rem; /* Add padding to prevent content from being hidden under header */
+  margin-top: 1rem; /* Add margin to create space after the header */
 }
 
 .main-content {
@@ -64,17 +76,43 @@ body {
 .section {
   margin-bottom: 3rem;
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 2rem;
+  padding-top: 3rem; /* Increased top padding */
   box-shadow: var(--box-shadow);
   width: 100%;
+  position: relative;
+  scroll-margin-top: 80px; /* Ensures scrolling positions content below the header */
+}
+
+.section-anchor-target {
+  position: absolute;
+  top: -80px;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .section-title {
   color: var(--primary-color);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   border-bottom: 2px solid var(--border-color);
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.75rem;
+  font-size: 2.2rem;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100px;
+  height: 4px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
 }
 
 .highlight {
@@ -84,11 +122,26 @@ body {
 
 .card {
   background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
+  padding: 1.75rem;
+  border-radius: 12px;
   box-shadow: var(--box-shadow);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.75rem;
 }
 
 .chart-container {
@@ -100,12 +153,19 @@ body {
 .flex-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 2rem;
   width: 100%;
+  margin: 2rem 0;
 }
 
 .flex-item {
-  flex: 1 1 300px;
+  flex: 1 1 340px;
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-item.card {
+  height: 100%;
 }
 
 .btn {
@@ -161,6 +221,32 @@ body {
   color: white;
 }
 
+/* List styling */
+ul, ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Fix for lists inside specific components */
+.overview-card ul, 
+.feature-category ul {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.overview-card li,
+.feature-category li {
+  margin-bottom: 0.5rem;
+}
+
+.benefit-list {
+  margin-top: 0;
+}
+
 /* Responsive breakpoints */
 @media (min-width: 1921px) {
   .main-content {
@@ -181,19 +267,31 @@ body {
   
   .section {
     padding: 1.5rem;
+    padding-top: 2.5rem; /* Maintain adequate top padding on smaller screens */
+    scroll-margin-top: 70px;
   }
   
   .flex-item {
     flex: 1 1 100%;
+  }
+  
+  html {
+    scroll-padding-top: 70px;
   }
 }
 
 @media (max-width: 480px) {
   .section {
     padding: 1rem;
+    padding-top: 2rem;
+    scroll-margin-top: 60px;
   }
   
   .section-title {
     font-size: 1.5rem;
+  }
+  
+  html {
+    scroll-padding-top: 60px;
   }
 }

@@ -74,7 +74,7 @@ const Methodology = () => {
             
             <div className="eval-item">
               <h4>Primary Metrics</h4>
-              <ul>
+              <ul className="metrics-list">
                 <li>AUC-ROC: Overall ranking performance</li>
                 <li>Precision: Minimizing false positives</li>
                 <li>Recall at 5%: Catch fraud while limiting investigation volume</li>

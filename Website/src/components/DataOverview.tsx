@@ -2,103 +2,104 @@ import '../styles/Sections.css';
 
 const DataOverview = () => {
   return (
-    <div className="section">
+    <div id="data" className="section">
+      <div className="section-anchor-target"></div>
       <h2 className="section-title">Data Overview</h2>
-      
+
       <div className="card">
         <h3>Data Sources</h3>
         <div className="data-sources">
           <div className="data-source-item">
-            <h4>Account Data</h4>
-            <p>Basic account information including age, type, balance, and status</p>
+            <h4>ECCUS Dataset</h4>
+            <p>Contains confirmed fraud accounts with customer IDs, account numbers, and dates</p>
+            <span className="badge badge-primary">Fraud Labels</span>
+          </div>
+          <div className="data-source-item">
+            <h4>SAVTXN Dataset</h4>
+            <p>Comprehensive transaction data with timestamps, amounts, types, and recipient details</p>
             <span className="badge badge-primary">Core Dataset</span>
           </div>
           <div className="data-source-item">
-            <h4>Transaction History</h4>
-            <p>Detailed records of financial transactions, including amounts, dates, types, and counterparties</p>
-            <span className="badge badge-primary">Core Dataset</span>
-          </div>
-          <div className="data-source-item">
-            <h4>Customer Data</h4>
-            <p>Demographic and behavioral information about account holders</p>
+            <h4>Customer Profile Data</h4>
+            <p>Demographic information and account histories</p>
             <span className="badge badge-secondary">Supplementary</span>
           </div>
         </div>
       </div>
-      
+
       <div className="flex-container">
         <div className="flex-item card">
           <h3>Key Statistics</h3>
           <ul className="stat-list">
-            <li><strong>Total Accounts:</strong> 100,000+</li>
-            <li><strong>Fraud Rate:</strong> ~1-2% of accounts</li>
-            <li><strong>Features:</strong> 45+ account-level variables</li>
-            <li><strong>Time Period:</strong> 24 months of transaction data</li>
-            <li><strong>Data Size:</strong> 1.5GB of structured data</li>
+            <li><strong>Fraud Impact:</strong> 21+ billion NTD lost in a quarter</li>
+            <li><strong>Fraud Rate:</strong> 1-2% of accounts identified as fraudulent</li>
+            <li><strong>Detection Accuracy:</strong> 91.1% F1-score in identifying suspicious accounts</li>
+            <li><strong>Data Coverage:</strong> 24+ months of transaction history</li>
+            <li><strong>Industry Adoption:</strong> 90% of financial institutions use ML for fraud detection</li>
           </ul>
         </div>
-        
+
         <div className="flex-item card">
           <h3>Data Quality</h3>
           <div className="quality-metrics">
             <div className="quality-metric">
               <div className="quality-bar" style={{ width: '92%' }}></div>
-              <p>Completeness: 92%</p>
+              <p data-value="92%">Completeness</p>
             </div>
             <div className="quality-metric">
               <div className="quality-bar" style={{ width: '89%' }}></div>
-              <p>Consistency: 89%</p>
+              <p data-value="89%">Consistency</p>
             </div>
             <div className="quality-metric">
               <div className="quality-bar" style={{ width: '94%' }}></div>
-              <p>Accuracy: 94%</p>
+              <p data-value="94%">Accuracy</p>
             </div>
             <div className="quality-metric">
               <div className="quality-bar" style={{ width: '97%' }}></div>
-              <p>Timeliness: 97%</p>
+              <p data-value="97%">Timeliness</p>
             </div>
           </div>
         </div>
       </div>
-      
+
       <div className="card">
         <h3>Feature Engineering</h3>
-        <p>The core challenge was transforming transaction-level data into account-level features that capture fraud patterns.</p>
-        
+        <p>Detecting fraudulent activity <strong>BEFORE</strong> financial losses occur requires transforming transaction data into predictive features.</p>
+
         <div className="feature-categories">
           <div className="feature-category">
             <h4>Temporal Patterns</h4>
             <ul>
-              <li>Transaction velocity (frequency over time)</li>
-              <li>Time-of-day transaction patterns</li>
-              <li>Weekend vs. weekday activity</li>
+              <li>Sudden changes in transaction frequency</li>
+              <li>Unusual hour-of-day activity</li>
+              <li>Account dormancy followed by high activity</li>
             </ul>
           </div>
-          
+
           <div className="feature-category">
             <h4>Amount Patterns</h4>
             <ul>
-              <li>Transaction amount statistics (mean, median, etc.)</li>
-              <li>Large transaction frequency</li>
-              <li>Unusual amount patterns</li>
+              <li>Sequential small transfers (structuring)</li>
+              <li>Deviation from historical amount ranges</li>
+              <li>Round-sum transactions</li>
             </ul>
           </div>
-          
+
           <div className="feature-category">
             <h4>Network Features</h4>
             <ul>
-              <li>Number of unique counterparties</li>
-              <li>Geographic diversity of transactions</li>
-              <li>New counterparty introduction rate</li>
+              <li>Transactions to high-risk regions</li>
+              <li>New beneficiary account patterns</li>
+              <li>Shared recipient accounts across multiple customers</li>
             </ul>
           </div>
-          
+
           <div className="feature-category">
             <h4>Account Behavior</h4>
             <ul>
-              <li>Balance volatility</li>
-              <li>Deposit-withdrawal patterns</li>
-              <li>Account usage consistency</li>
+              <li>Account emptying velocity</li>
+              <li>Login location vs. transaction location</li>
+              <li>Multi-channel transaction patterns</li>
             </ul>
           </div>
         </div>

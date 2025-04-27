@@ -14,7 +14,7 @@ const Footer = () => {
           
           <div className="footer-section">
             <h4>Project Links</h4>
-            <ul>
+            <ul className="footer-links">
               <li><a href="#documentation">Documentation</a></li>
               <li><a href="#github">GitHub Repository</a></li>
               <li><a href="#contact">Contact Team</a></li>
@@ -23,7 +23,7 @@ const Footer = () => {
           
           <div className="footer-section">
             <h4>Resources</h4>
-            <ul>
+            <ul className="footer-links">
               <li><a href="#whitepaper">Methodology Whitepaper</a></li>
               <li><a href="#case-studies">Case Studies</a></li>
               <li><a href="#faq">FAQ</a></li>

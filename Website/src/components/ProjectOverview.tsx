@@ -2,7 +2,8 @@ import '../styles/Sections.css';
 
 const ProjectOverview = () => {
   return (
-    <div className="section">
+    <div id="overview" className="section">
+      <div className="section-anchor-target"></div>
       <h2 className="section-title">Project Overview</h2>
       
       <div className="overview-intro">

@@ -22,6 +22,12 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
   const handleNavClick = (sectionId: string) => {
     setActiveSection(sectionId);
     setMobileMenuOpen(false);
+    
+    // Scroll to section with proper offset
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
