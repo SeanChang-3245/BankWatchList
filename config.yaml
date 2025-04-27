@@ -30,15 +30,17 @@ dataset:
       'DRCR', 'CHANNEL_CODE', 'TRN_CODE', 'BRANCH_NO', 'EMP_NO', 'SAME_NUMBER_IP', 'SAME_NUMBER_UUID', 'DAY_OF_WEEK' 
     ]
   categoryEmbedding: "./Data/CategoryEmbedding.yaml"
-  validateSplit: 0.1
+  validateSplit: 0.2
   
 parameter:
   batchSize: 128
   learningRate: 0.0001
-  attention_head: 4
-  num_layers: 8
-  d_model: 128
+  attention_head: 2
+  num_layers: 2
+  d_model: 64
   epochs: 30
-
+  threshold: 0.7
+  dropout: 0.3
+  
 model:
   textEmbeddingModel: "paraphrase-multilingual-MiniLM-L12-v2"

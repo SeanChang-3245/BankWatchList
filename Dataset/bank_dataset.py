@@ -228,7 +228,7 @@ class BankTxnDataset(Dataset):
                 acct  # Store the account number
             ))
         
-        # Data augmentation for training: duplicate sequences with label 1 three times, 
+        # Data augmentation for training: duplicate sequences with label 1 ten times, 
         # adding noise up to ±10% on the numerical features that are at the beginning of each feature vector.
         if split == "train":
             augmented_sequences = []
@@ -236,7 +236,7 @@ class BankTxnDataset(Dataset):
                 augmented_sequences.append((features, label, acct))
                 # Check if label is 1
                 if int(label.item()) == 1:
-                    for _ in range(3):
+                    for _ in range(10):
                         new_features = features.clone()
                         # Apply noise to the first self.num_numeric columns (numeric features)
                         numeric_feats = new_features[:, :self.num_numeric]
