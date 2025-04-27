@@ -108,29 +108,13 @@ const Methodology = () => {
           <div className="pipeline-step">
             <div className="step-number">2</div>
             <div className="step-content">
-              <h4>Data Augmentation</h4>
-              <p>Identifying the most predictive features using SHAP values and correlation analysis</p>
-            </div>
-          </div>
-          
-          <div className="pipeline-step">
-            <div className="step-number">3</div>
-            <div className="step-content">
               <h4>Handling Class Imbalance</h4>
               <p>Using SMOTE for synthetic minority oversampling and adjusted class weights</p>
             </div>
           </div>
           
           <div className="pipeline-step">
-            <div className="step-number">4</div>
-            <div className="step-content">
-              <h4>Hyperparameter Tuning</h4>
-              <p>Bayesian optimization to find optimal model parameters</p>
-            </div>
-          </div>
-          
-          <div className="pipeline-step">
-            <div className="step-number">5</div>
+            <div className="step-number">3</div>
             <div className="step-content">
               <h4>Model Evaluation</h4>
               <p>Comprehensive performance assessment on holdout test data</p>
@@ -138,7 +122,7 @@ const Methodology = () => {
           </div>
           
           <div className="pipeline-step">
-            <div className="step-number">6</div>
+            <div className="step-number">4</div>
             <div className="step-content">
               <h4>Deployment</h4>
               <p>Packaging the model for real-time scoring in the production environment</p>
