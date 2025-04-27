@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import ProjectOverview from './components/ProjectOverview';
 import DataOverview from './components/DataOverview';
 import Methodology from './components/Methodology';
+import DataUpload from './components/DataUpload';
 
 function App() {
   const [activeSection, setActiveSection] = useState('overview');
@@ -17,6 +18,8 @@ function App() {
         return <DataOverview />;
       case 'methodology':
         return <Methodology />;
+      case 'upload':
+        return <DataUpload />;
       // Add these additional cases once the components are created
       /*
       case 'results':

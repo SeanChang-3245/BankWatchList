@@ -13,10 +13,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection, setActiveSection }) => {
     { id: 'overview', label: 'Project Overview' },
     { id: 'data', label: 'Data Overview' },
     { id: 'methodology', label: 'Methodology' },
-    { id: 'results', label: 'Key Results' },
-    { id: 'insights', label: 'Model Insights' },
-    { id: 'implementation', label: 'Implementation' },
-    { id: 'future', label: 'Future Improvements' },
+    { id: 'upload', label: 'Data Upload' },
   ];
 
   const handleNavClick = (sectionId: string) => {
