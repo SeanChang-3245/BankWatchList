@@ -21,14 +21,14 @@ const Methodology = () => {
       <div className="flex-container">
         <div className="flex-item card">
           <h3>Model Selection</h3>
-          <p>After evaluating several machine learning algorithms, we selected <strong>XGBoost</strong> as our primary model due to:</p>
+          <p>After evaluating several machine learning algorithms, we selected <strong>Transformer</strong> as our primary model due to:</p>
           
           <ul className="feature-list">
             <li>
               <span className="feature-icon">✓</span>
               <div>
-                <strong>Performance with Imbalanced Data</strong>
-                <p>Handles the inherent class imbalance in fraud detection (1-2% fraud rate)</p>
+                <strong>Ability to process sequence data</strong>
+                <p>Handles the variable length of transaction data</p>
               </div>
             </li>
             
@@ -101,14 +101,14 @@ const Methodology = () => {
             <div className="step-number">1</div>
             <div className="step-content">
               <h4>Data Preprocessing</h4>
-              <p>Feature normalization, encoding categorical variables, and handling missing values</p>
+              <p>Feature normalization, encoding categorical variables, handling missing values and grouping by account number</p>
             </div>
           </div>
           
           <div className="pipeline-step">
             <div className="step-number">2</div>
             <div className="step-content">
-              <h4>Feature Selection</h4>
+              <h4>Data Augmentation</h4>
               <p>Identifying the most predictive features using SHAP values and correlation analysis</p>
             </div>
           </div>
